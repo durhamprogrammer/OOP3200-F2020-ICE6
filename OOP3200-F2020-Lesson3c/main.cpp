@@ -7,6 +7,22 @@
 #include "GameObject.h"
 #include "Vector3D.h"
 
+void PrintGameObjects(const std::map<std::string, GameObject*>& game_objects)
+{
+	std::cout << "=================================" << std::endl;
+	std::cout << " Output map of Game Objects      " << std::endl;
+	std::cout << "=================================" << std::endl;
+	
+	// for every game_object in gameObjects...loop
+	for (const auto& game_object : game_objects)
+	{
+		std::cout << "Key  : " << game_object.first << std::endl;
+		std::cout << "---------------------------------" << std::endl;
+		std::cout << game_object.second->ToString();
+		std::cout << "---------------------------------\n" << std::endl;
+	}
+}
+
 
 int main()
 {
@@ -22,14 +38,7 @@ int main()
 	gameObjects[enemy->GetName()] = enemy;
 	gameObjects[space_station->GetName()] = space_station;
 
-	// for every game_object in gameObjects...loop
-	for (const auto& game_object : gameObjects)
-	{
-		std::cout << "Key  : " << game_object.first << std::endl;
-		std::cout << "Value: " << std::endl;
-		std::cout << "---------------------------------" << std::endl;
-		std::cout << game_object.second->ToString() << std::endl;
-	}
+	PrintGameObjects(gameObjects);
 
 	auto distance = Vector2D<float>::Distance(gameObjects["Ship"]->GetPosition(), gameObjects["Enemy"]->GetPosition());
 
@@ -45,8 +54,13 @@ int main()
 	outfile.close();
 	
 	std::cout << "------------------------------------------------------------------------------------------------\n";
-	std::cout << " END OF OUTPUT - STARTING INPUT \n";
+	std::cout << " END OF OUTPUT \n";
 	std::cout << "------------------------------------------------------------------------------------------------\n\n";
+
+	std::cout << "\n------------------------------------------------------------------------------------------------\n";
+	std::cout << " STARTING INPUT \n";
+	std::cout << "------------------------------------------------------------------------------------------------\n\n";
+
 	
 	std::ifstream infile;
 	std::string fileName = "GameObject.txt";
@@ -72,23 +86,15 @@ int main()
 
 			auto* temp_object = new GameObject(name, id, x, y);
 
-			gameObjects[name + " 2"] = temp_object;
+			gameObjects[name + " 1"] = temp_object;
 		}
 		infile.close();
 	}
 
 
+	PrintGameObjects(gameObjects);
+
 	
-
-	// for every game_object in gameObjects...loop
-	for (const auto& game_object : gameObjects)
-	{
-		std::cout << "Key  : " << game_object.first << std::endl;
-		std::cout << "Value: " << std::endl;
-		std::cout << "---------------------------------" << std::endl;
-		std::cout << game_object.second->ToString() << std::endl;
-	}
-
 	std::cout << "------------------------------------------------------------------------------------------------\n";
 	std::cout << " END OF INPUT \n";
 	std::cout << "------------------------------------------------------------------------------------------------\n\n";
